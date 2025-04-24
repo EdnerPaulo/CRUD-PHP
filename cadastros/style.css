@@ -1,0 +1,40 @@
+/* Estilos gerais */
+body {
+    text-align: center;
+    background: linear-gradient(to right, #00b4d8, #90e0ef); /* Degradê de azul claro */
+    font-family: Arial, sans-serif;
+    display: flex; /* Usando flexbox para centralizar o conteúdo */
+    justify-content: center; /* Alinha o conteúdo horizontalmente */
+    align-items: center; /* Alinha o conteúdo verticalmente */
+    height: 100vh; /* Garante que o body ocupe a altura total da tela */
+    margin: 0; /* Remove margens padrão do body */
+}
+
+div {
+    padding: 20px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.8); /* Fundo branco com transparência */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+input[type="text"], input[type="submit"] {
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Estilos específicos para a página de entrada */
+.entrada h1 {
+    margin-top: 50px;
+}
+
+/* Estilos específicos para a página de resultado */
+.resultado div {
+    font-size: 18px;
+    margin-top: 30px;
+}
+label {
+    margin-top: 1rem;
+  }
