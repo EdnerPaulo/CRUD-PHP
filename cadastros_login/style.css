@@ -1,0 +1,195 @@
+/* --- Estilos Globais --- */
+
+:root {
+    --primary-color: #00b4d8;
+    --secondary-color: #90e0ef;
+    --form-bg-color: #fff;
+    --text-color: #333;
+    --input-border-color: #ccc;
+    --button-bg-color: #5386ee;
+    --button-hover-bg-color: #0e0e70;
+    --box-shadow-color: rgba(0, 0, 0, 0.1);
+    --border-radius: 5px;
+    --font-family: Arial, sans-serif;
+}
+
+body {
+    text-align: center;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    font-family: var(--font-family);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: var(--text-color);
+}
+
+.main-container {
+    padding: 2em;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 5px 10px var(--box-shadow-color);
+    width: 80%;
+    max-width: 1300px;
+    margin: 1em auto; /* Centraliza horizontalmente */
+}
+
+h1 {
+    margin-bottom: 1.2em;
+    font-size: 2em;
+    text-align: center;
+}
+
+/* --- Estilos para Formulários (index.html) --- */
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+section {
+    width: 30%;
+    margin-bottom: 1.5em;
+}
+
+form {
+    background-color: var(--form-bg-color);
+    padding: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0 0 15px var(--box-shadow-color);
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1em;
+    font-style: italic;
+    font-size: 1.6em;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.8em;
+    margin-bottom: 1.2em;
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--border-radius);
+    font-size: 1em;
+}
+
+.form-input::placeholder {
+    font-size: 0.9em;
+    color: #666;
+}
+
+input[type="submit"],
+input[type="reset"] {
+    width: 100%;
+    padding: 1em;
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+    background-color: var(--button-hover-bg-color);
+}
+
+/* --- Estilos para Mensagens de Resultado (cadastro.php, fornecedor.php, produtos.php) --- */
+
+.result-message {
+    font-size: 1.1em;
+    margin-top: 1.5em;
+    padding: 1em;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 5px var(--box-shadow-color);
+}
+
+.result-message p {
+    font-size: 0.9em;
+    margin-top: 0.5em;
+}
+
+.result-message h1 { /* Estilo específico para o h1 dentro de .result-message */
+    font-size: 1.5em;
+    margin-bottom: 0.8em;
+}
+
+.result-message a { /* Estilo para o link de voltar */
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.result-message a:hover {
+    text-decoration: underline;
+}
+
+/* --- Media Queries para Responsividade --- */
+
+@media screen and (max-width: 960px) {
+    .main-container {
+        width: 90%;
+        padding: 1.5em;
+    }
+
+    main {
+        flex-direction: column;
+    }
+
+    section {
+        width: 100%;
+        margin-bottom: 1em;
+    }
+
+    form {
+        padding: 1em;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .main-container {
+        width: 95%;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    h2 {
+        font-size: 1.2em;
+    }
+
+    .form-input {
+        font-size: 0.95em;
+    }
+
+    input[type="submit"],
+    input[type="reset"] {
+        font-size: 1em;
+    }
+}
