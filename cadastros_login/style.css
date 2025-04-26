@@ -48,10 +48,11 @@ main {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: stretch;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
 }
 
 section {
-    width: 30%;
+    width: 27%;
     margin-bottom: 1.5em;
 }
 
@@ -80,7 +81,7 @@ label {
 }
 
 .form-input {
-    width: 100%;
+    width: 90%;
     padding: 0.8em;
     margin-bottom: 1.2em;
     border: 1px solid var(--input-border-color);

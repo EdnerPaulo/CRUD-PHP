@@ -16,21 +16,21 @@
     $senha = '';
 
     try {
-        // Conexão com MySQL procedural para criar o banco (Manter, usar PDO para o resto)
+        // Conexão com MySQL procedural para criar o banco
         $mysqli = new mysqli($host, $usuario, $senha);
         if ($mysqli->connect_error) {
             throw new Exception("Erro de conexão (MySQLi): " . $mysqli->connect_error);
         }
 
-        // Criar banco se não existir (Manter, usar PDO para o resto)
+        // Criar banco se não existir
         if (!$mysqli->query("CREATE DATABASE IF NOT EXISTS $banco")) {
             throw new Exception("Erro ao criar banco (MySQLi): " . $mysqli->error);
         }
 
-        // Conectar ao banco com PDO (Usar apenas PDO daqui para frente)
+        // Conectar ao banco com PDO
         $pdo = new PDO("mysql:host=$host;dbname=$banco", $usuario, $senha);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); // Melhor prática
+        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
         // Criar a tabela "clientes" se não existir
         $sql = "CREATE TABLE IF NOT EXISTS clientes (
@@ -43,37 +43,42 @@
 
         // Verificar se todos os campos foram preenchidos
         if (empty($_POST["name"]) || empty($_POST["username"]) || empty($_POST["password1"]) || empty($_POST["password2"])) {
-            echo "<div class='result-message' style='color:red;'>Por favor, preencha todos os campos.</div>"; // Alterado
+            echo "<div class='result-message' style='color:red;'>Por favor, preencha todos os campos.</div>";
         } elseif ($_POST["password1"] != $_POST["password2"]) {
-            echo "<div class='result-message' style='color:red;'>As senhas não coincidem.</div>"; // Alterado
+            echo "<div class='result-message' style='color:red;'>As senhas não coincidem.</div>";
         } else {
             // Filtrar dados do formulário
             $nome = filter_var($_POST["name"], FILTER_SANITIZE_STRING);
             $email = filter_var($_POST["username"], FILTER_SANITIZE_EMAIL);
-            $senha = $_POST["password1"];
-            $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
-
-            // Verificar se o e-mail já existe
-            $sql = "SELECT COUNT(*) FROM clientes WHERE email = :email";
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':email', $email);
-            $stmt->execute();
-            $count = $stmt->fetchColumn();
-
-            if ($count > 0) {
-                echo "<div class='result-message' style='color:red;'>O e-mail $email já está cadastrado. Por favor, use outro e-mail.</div>"; // Alterado
+            
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                echo "<div class='result-message' style='color:red;'>Por favor, insira um e-mail válido.</div>";
             } else {
-                // Inserir o novo usuário no banco
-                $sql = "INSERT INTO clientes (nome, email, senha) VALUES (:nome, :email, :senha)";
-                $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':nome', $nome);
-                $stmt->bindParam(':email', $email);
-                $stmt->bindParam(':senha', $senhaHash);
+                $senha = $_POST["password1"];
+                $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
-                if ($stmt->execute()) {
-                    echo "<div class='result-message'><h1>Cadastrado com sucesso!</h1><p>É um prazer te conhecer, <strong>$nome</strong>.</p></div>"; // Alterado
+                // Verificar se o e-mail já existe
+                $sql = "SELECT COUNT(*) FROM clientes WHERE email = :email";
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(':email', $email);
+                $stmt->execute();
+                $count = $stmt->fetchColumn();
+
+                if ($count > 0) {
+                    echo "<div class='result-message' style='color:red;'>O e-mail $email já está cadastrado. Por favor, use outro e-mail.</div>";
                 } else {
-                    echo "<div class='result-message' style='color:red;'>Erro ao cadastrar usuário.</div>"; // Alterado
+                    // Inserir o novo usuário no banco
+                    $sql = "INSERT INTO clientes (nome, email, senha) VALUES (:nome, :email, :senha)";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindParam(':nome', $nome);
+                    $stmt->bindParam(':email', $email);
+                    $stmt->bindParam(':senha', $senhaHash);
+
+                    if ($stmt->execute()) {
+                        echo "<div class='result-message'><h1>Cadastrado com sucesso!</h1><p>É um prazer te conhecer, <strong>$nome</strong>.</p></div>";
+                    } else {
+                        echo "<div class='result-message' style='color:red;'>Erro ao cadastrar usuário.</div>";
+                    }
                 }
             }
         }

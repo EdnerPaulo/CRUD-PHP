@@ -16,23 +16,23 @@
     $senha = '';
 
     try {
-        // Conexão com MySQL procedural para criar o banco (Manter, usar PDO para o resto)
+        // Conexão com MySQL procedural para criar o banco
         $mysqli = new mysqli($host, $usuario, $senha);
         if ($mysqli->connect_error) {
             throw new Exception("Erro de conexão (MySQLi): " . $mysqli->connect_error);
         }
 
-        // Criar banco se não existir (Manter, usar PDO para o resto)
+        // Criar banco se não existir
         if (!$mysqli->query("CREATE DATABASE IF NOT EXISTS $banco")) {
             throw new Exception("Erro ao criar banco (MySQLi): " . $mysqli->error);
         }
 
-        // Conectar ao banco com PDO (Usar apenas PDO daqui para frente)
+        // Conectar ao banco com PDO
         $pdo = new PDO("mysql:host=$host;dbname=$banco", $usuario, $senha);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); // Melhor prática
+        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-        // Criar a tabela "fornecedores" se não existir (Adapte o nome e os campos)
+        // Criar a tabela "fornecedores" se não existir
         $sql = "CREATE TABLE IF NOT EXISTS fornecedores (
             id INT PRIMARY KEY AUTO_INCREMENT,
             nome_fornecedor VARCHAR(255) NOT NULL,
@@ -42,36 +42,42 @@
         )";
         $pdo->exec($sql);
 
-        // Verificar se todos os campos foram preenchidos (Adapte os nomes)
-        if (empty($_POST["fornecedor"]) || empty($_POST["username"]) || empty($_POST["produtosf"])) {
-            echo "<div class='result-message' style='color:red;'>Por favor, preencha todos os campos.</div>"; // Alterado
+        // Verificar se todos os campos foram preenchidos
+        if (empty($_POST["fornecedor"]) || empty($_POST["username"]) || empty($_POST["telefone"]) || empty($_POST["produtosf"])) {
+            echo "<div class='result-message' style='color:red;'>Por favor, preencha todos os campos.</div>";
         } else {
-            // Filtrar dados do formulário (Adapte os nomes)
+            // Filtrar dados do formulário
             $nome_fornecedor = filter_var($_POST["fornecedor"], FILTER_SANITIZE_STRING);
             $email = filter_var($_POST["username"], FILTER_SANITIZE_EMAIL);
+            $telefone = filter_var($_POST["telefone"], FILTER_SANITIZE_STRING);
             $nome_produto_fornecido = filter_var($_POST["produtosf"], FILTER_SANITIZE_STRING);
 
-            // Verificar se o e-mail já existe (Adapte o nome da tabela)
-            $sql = "SELECT COUNT(*) FROM fornecedores WHERE email = :email";
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':email', $email);
-            $stmt->execute();
-            $count = $stmt->fetchColumn();
-
-            if ($count > 0) {
-                echo "<div class='result-message' style='color:red;'>O e-mail $email já está cadastrado. Por favor, use outro e-mail.</div>"; // Alterado
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                echo "<div class='result-message' style='color:red;'>Por favor, insira um e-mail válido.</div>";
             } else {
-                // Inserir o novo fornecedor no banco (Adapte os nomes da tabela e dos campos)
-                $sql = "INSERT INTO fornecedores (nome_fornecedor, email, nome_produto_fornecido) VALUES (:nome_fornecedor, :email, :nome_produto_fornecido)";
+                // Verificar se o e-mail já existe
+                $sql = "SELECT COUNT(*) FROM fornecedores WHERE email = :email";
                 $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':nome_fornecedor', $nome_fornecedor);
                 $stmt->bindParam(':email', $email);
-                $stmt->bindParam(':nome_produto_fornecido', $nome_produto_fornecido);
+                $stmt->execute();
+                $count = $stmt->fetchColumn();
 
-                if ($stmt->execute()) {
-                    echo "<div class='result-message'><h1>Fornecedor cadastrado com sucesso!</h1><p>Fornecedor <strong>$nome_fornecedor</strong> cadastrado.</p></div>"; // Alterado
+                if ($count > 0) {
+                    echo "<div class='result-message' style='color:red;'>O e-mail $email já está cadastrado. Por favor, use outro e-mail.</div>";
                 } else {
-                    echo "<div class='result-message' style='color:red;'>Erro ao cadastrar fornecedor.</div>"; // Alterado
+                    // Inserir o novo fornecedor no banco
+                    $sql = "INSERT INTO fornecedores (nome_fornecedor, email, telefone, nome_produto_fornecido) VALUES (:nome_fornecedor, :email, :telefone, :nome_produto_fornecido)";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindParam(':nome_fornecedor', $nome_fornecedor);
+                    $stmt->bindParam(':email', $email);
+                    $stmt->bindParam(':telefone', $telefone);
+                    $stmt->bindParam(':nome_produto_fornecido', $nome_produto_fornecido);
+
+                    if ($stmt->execute()) {
+                        echo "<div class='result-message'><h1>Fornecedor cadastrado com sucesso!</h1><p>Fornecedor <strong>$nome_fornecedor</strong> cadastrado.</p></div>";
+                    } else {
+                        echo "<div class='result-message' style='color:red;'>Erro ao cadastrar fornecedor.</div>";
+                    }
                 }
             }
         }

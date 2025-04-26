@@ -8,24 +8,24 @@
 </head>
 <body>
     <div class="main-container">
-        <h1>Cadastros</h1>
+        <h2>Cadastros</h2>
         <p>Preencha os campos abaixo para se cadastrar.</p>
         <p>Você pode se cadastrar como cliente, fornecedor e cadastrar seus produtos.</p>
         <main>
             <section>
                 <h2>Cadastro para Clientes</h2>
                 <form action="cadastro.php" method="post">
-                    <label for="nome">Nome:</label><br/>
-                    <input type="text" class="form" id="nome" name="nome" required placeholder="Cadastre seu nome completo"><br/>
+                    <label for="name">Nome:</label><br/>
+                    <input type="text" class="form-input" id="name" name="name" required placeholder="Cadastre seu nome completo"><br/>
 
-                    <label for="email">Email:</label><br/>
-                    <input type="email" class="form" id="email" name="email" required placeholder="Cadastre um email válido"><br/>
+                    <label for="username">Email:</label><br/>
+                    <input type="email" class="form-input" id="username" name="username" required placeholder="Cadastre um email válido"><br/>
                     
-                    <label for="senha">Senha:</label><br/>
-                    <input type="password" class="form" id="senha" name="senha" minlength="4" required placeholder="Preencha a senha"><br/>
+                    <label for="password1">Senha:</label><br/>
+                    <input type="password" class="form-input" id="password1" name="password1" minlength="4" required placeholder="Preencha a senha"><br/>
                     
-                    <label for="confirmar_senha">Confirmar Senha:</label><br/>
-                    <input type="password" class="form" id="confirmar_senha" name="confirmar_senha" minlength="4" required placeholder="Preencha novamente a senha"><br/>
+                    <label for="password2">Confirmar Senha:</label><br/>
+                    <input type="password" class="form-input" id="password2" name="password2" minlength="4" required placeholder="Preencha novamente a senha"><br/>
                     
                     <input type="submit" value="Cadastrar">
                     <input type="reset" value="Limpar Dados">
@@ -34,17 +34,17 @@
             <section>
                 <h2>Cadastro para Fornecedores</h2>
                 <form action="fornecedor.php" method="post">
-                    <label for="nome_fornecedor">Nome do Fornecedor:</label><br/>
-                    <input type="text" class="form" id="nome_fornecedor" name="nome_fornecedor" required placeholder="Nome do Fornecedor"><br/>
+                    <label for="fornecedor">Nome do Fornecedor:</label><br/>
+                    <input type="text" class="form-input" id="fornecedor" name="fornecedor" required placeholder="Nome do Fornecedor"><br/>
                     
-                    <label for="email">Email:</label><br/>
-                    <input type="email" class="form" id="email" name="email" required placeholder="Cadastre um email válido"><br/>
+                    <label for="username">Email:</label><br/>
+                    <input type="email" class="form-input" id="username" name="username" required placeholder="Cadastre um email válido"><br/>
 
                     <label for="telefone">Telefone:</label><br/>
-                    <input type="text" class="form" id="telefone" name="telefone" required placeholder="Cadastre um telefone"><br/>                    
+                    <input type="text" class="form-input" id="telefone" name="telefone" required placeholder="Cadastre um telefone"><br/>                    
                     
-                    <label for="nome_produto_fornecido">Nome do Produto Fornecido:</label><br/>
-                    <input type="text" class="form" id="nome_produto_fornecido" name="nome_produto_fornecido" required placeholder="Nome do Produto Fornecido"><br/>
+                    <label for="produtosf">Nome do Produto Fornecido:</label><br/>
+                    <input type="text" class="form-input" id="produtosf" name="produtosf" required placeholder="Nome do Produto Fornecido"><br/>
                     
                     <input type="submit" value="Cadastrar">
                     <input type="reset" value="Limpar Dados">
@@ -53,17 +53,17 @@
             <section>
                 <h2>Cadastro para Produtos</h2>
                 <form action="produtos.php" method="post">
-                    <label for="nome_produto">Nome do Produto:</label><br/>
-                    <input type="text" class="form" id="nome_produto" name="nome_produto" required placeholder="Nome do Produto"><br/>
+                    <label for="produtos">Nome do Produto:</label><br/>
+                    <input type="text" class="form-input" id="produtos" name="produtos" required placeholder="Nome do Produto"><br/>
 
-                    <label for="valor_produto">Valor do Produto:</label><br/>
-                    <input type="text" class="form" id="valor_produto" name="valor_produto" required placeholder="Valor do Produto"><br/>
+                    <label for="valor">Valor do Produto:</label><br/>
+                    <input type="text" class="form-input" id="valor" name="valor" required placeholder="Valor do Produto"><br/>
                     
-                    <label for="quantidade_produto">Quantidade do Produto:</label><br/>
-                    <input type="text" class="form" id="quantidade_produto" name="quantidade_produto" required placeholder="Quantidade do Produto"><br/>
+                    <label for="quantidade">Quantidade do Produto:</label><br/>
+                    <input type="number" class="form-input" id="quantidade" name="quantidade" required placeholder="Quantidade do Produto"><br/>
 
-                    <label for="fornecedor_produto">Nome do Fornecedor:</label><br/>
-                    <input type="text" class="form" id="fornecedor_produto" name="fornecedor_produto" required placeholder="Nome do Fornecedor"><br/>
+                    <label for="fornecedor">Nome do Fornecedor:</label><br/>
+                    <input type="text" class="form-input" id="fornecedor" name="fornecedor" required placeholder="Nome do Fornecedor"><br/>
                     
                     <input type="submit" value="Cadastrar">
                     <input type="reset" value="Limpar Dados">
